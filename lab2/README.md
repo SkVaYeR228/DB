@@ -2,7 +2,8 @@
 ## Скрипти
 
 ### Таблиця:
-```CREATE TABLE Customers (
+```
+CREATE TABLE Customers (
     CustomerID SERIAL PRIMARY KEY,
     FirstName VARCHAR(100) NOT NULL,
     LastName VARCHAR(100) NOT NULL,
@@ -82,7 +83,8 @@ CREATE TABLE OrderItems (
 );
 ```
 ### Данні:
-```INSERT INTO Customers (FirstName, LastName, Email, PasswordHash, Address)
+```
+INSERT INTO Customers (FirstName, LastName, Email, PasswordHash, Address)
 VALUES
 ('Іван', 'Петренко', 'ivan@example.com', 'hash123', 'м. Київ, вул. Хрещатик, 1'),
 ('Марія', 'Сидоренко', 'maria@example.com', 'hash456', 'м. Львів, пл. Ринок, 5'),
