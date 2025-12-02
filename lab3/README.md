@@ -44,7 +44,6 @@ SELECT ProductID, Price FROM Products WHERE ProductID = 1;
 DELETE FROM OrderItems
 WHERE OrderID = 2 AND ProductID = 3;
 
--- Перевірка видалення:
 SELECT * FROM OrderItems WHERE OrderID = 2;
 
 
