@@ -2,6 +2,7 @@
 ## Скрипти
 
 ### Таблиця:
+```
 CREATE TABLE Customers (
     CustomerID SERIAL PRIMARY KEY,
     FirstName VARCHAR(100) NOT NULL,
@@ -80,8 +81,9 @@ CREATE TABLE OrderItems (
     FOREIGN KEY (OrderID) REFERENCES Orders(OrderID) ON DELETE CASCADE,
     FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
 );
-
+```
 ### Данні:
+```
 INSERT INTO Customers (FirstName, LastName, Email, PasswordHash, Address)
 VALUES
 ('Іван', 'Петренко', 'ivan@example.com', 'hash123', 'м. Київ, вул. Хрещатик, 1'),
@@ -151,7 +153,7 @@ VALUES
 (1, 2, 1, 150.00), -- ... і 1 "Кобзар (м'який)"
 (2, 3, 1, 220.00), -- Марія купила 1 "Захар Беркут"
 (3, 5, 1, 99.00);  -- Іван купив 1 "Війна світів (epub)"
-
+```
 ## Короткий письмовий звіт:
 ### 1. Основні сутності:
 
@@ -207,7 +209,7 @@ VALUES
 
 *Припущення: Відокремлено "Книгу" (твір) від "Товару" (те, що лежить на складі), щоб один твір міг продаватися у багатьох форматах.*
 
-3. Таблиці замовлень
+### 3. Таблиці замовлень
 
 ### Orders (Замовлення)
 
