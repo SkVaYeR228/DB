@@ -1,5 +1,6 @@
 # Lab 3
 ## Скрипти
+```
 SELECT Title, PublicationYear 
 FROM Books 
 WHERE PublicationYear > 1900;
@@ -51,6 +52,7 @@ DELETE FROM Categories
 WHERE CategoryName = 'Бізнес література';
 
 SELECT * FROM Categories WHERE CategoryName = 'Бізнес література';
+```
 
 ## Короткий письмовий звіт
 ### Customers: Зберігає дані користувачів.
