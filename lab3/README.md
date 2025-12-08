@@ -1,5 +1,6 @@
 # Lab 3
 ## Скрипти
+```
 SELECT Title, PublicationYear 
 FROM Books 
 WHERE PublicationYear > 1900;
@@ -44,7 +45,6 @@ SELECT ProductID, Price FROM Products WHERE ProductID = 1;
 DELETE FROM OrderItems
 WHERE OrderID = 2 AND ProductID = 3;
 
--- Перевірка видалення:
 SELECT * FROM OrderItems WHERE OrderID = 2;
 
 
@@ -52,6 +52,7 @@ DELETE FROM Categories
 WHERE CategoryName = 'Бізнес література';
 
 SELECT * FROM Categories WHERE CategoryName = 'Бізнес література';
+```
 
 ## Короткий письмовий звіт
 ### Customers: Зберігає дані користувачів.
