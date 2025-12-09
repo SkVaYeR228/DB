@@ -1,0 +1,131 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model books {
+  bookid          Int           @id @default(autoincrement())
+  publisherid     Int?
+  title           String        @db.VarChar(255)
+  description     String?
+  publicationyear Int?
+  isbestseller    Boolean       @default(false)
+  
+  publishers      publishers?   @relation(fields: [publisherid], references: [publisherid], onDelete: NoAction, onUpdate: NoAction)
+  products        products[]
+  book_author     book_author[]
+  book_category   book_category[]
+}
+
+model products {
+  productid     Int          @id @default(autoincrement())
+  bookid        Int
+  format        String       @db.VarChar(50)
+  price         Decimal      @db.Decimal(10, 2)
+  stockquantity Int          @default(0)
+  
+  books         books        @relation(fields: [bookid], references: [bookid], onDelete: Cascade, onUpdate: NoAction)
+  orderitems    orderitems[]
+  reviews       reviews[]
+}
+
+model reviews {
+  reviewid  Int      @id @default(autoincrement())
+  rating    Int
+  comment   String?
+  createdat DateTime @default(now())
+  productid Int
+  
+  product   products @relation(fields: [productid], references: [productid])
+}
+
+model customers {
+  customerid   Int       @id @default(autoincrement())
+  firstname    String    @db.VarChar(100)
+  lastname     String    @db.VarChar(100)
+  email        String    @unique @db.VarChar(255)
+  passwordhash String    @db.VarChar(255)
+  orders       orders[]
+  addresses    addresses[]
+}
+
+model orders {
+  orderid     Int          @id @default(autoincrement())
+  customerid  Int?
+  orderdate   DateTime     @default(now()) @db.Timestamp(6)
+  totalamount Decimal?     @db.Decimal(10, 2)
+  statusid    Int
+  
+  customers   customers?   @relation(fields: [customerid], references: [customerid], onDelete: NoAction, onUpdate: NoAction)
+  orderstatus orderstatuses @relation(fields: [statusid], references: [statusid])
+  orderitems  orderitems[]
+}
+
+model orderitems {
+  orderitemid Int      @id @default(autoincrement())
+  orderid     Int
+  productid   Int
+  quantity    Int
+  unitprice   Decimal  @db.Decimal(10, 2)
+  orders      orders   @relation(fields: [orderid], references: [orderid], onDelete: Cascade, onUpdate: NoAction)
+  products    products @relation(fields: [productid], references: [productid], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model orderstatuses {
+  statusid   Int      @id @default(autoincrement())
+  statusname String   @unique @db.VarChar(50)
+  orders     orders[]
+}
+
+model addresses {
+  addressid  Int       @id @default(autoincrement())
+  customerid Int
+  city       String?   @db.VarChar(100)
+  street     String?   @db.VarChar(255)
+  postalcode String?   @db.VarChar(20)
+  country    String?   @default("Україна") @db.VarChar(100)
+  customers  customers @relation(fields: [customerid], references: [customerid], onDelete: Cascade)
+}
+
+model authors {
+  authorid    Int           @id @default(autoincrement())
+  name        String        @db.VarChar(255)
+  biography   String?
+  book_author book_author[]
+}
+
+model publishers {
+  publisherid Int     @id @default(autoincrement())
+  name        String  @db.VarChar(255)
+  country     String? @db.VarChar(100)
+  books       books[]
+}
+
+model categories {
+  categoryid    Int             @id @default(autoincrement())
+  categoryname  String          @unique @db.VarChar(100)
+  book_category book_category[]
+}
+
+model book_author {
+  bookid   Int
+  authorid Int
+  authors  authors @relation(fields: [authorid], references: [authorid], onDelete: Cascade, onUpdate: NoAction)
+  books    books   @relation(fields: [bookid], references: [bookid], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([bookid, authorid])
+}
+
+model book_category {
+  bookid     Int
+  categoryid Int
+  books      books      @relation(fields: [bookid], references: [bookid], onDelete: Cascade, onUpdate: NoAction)
+  categories categories @relation(fields: [categoryid], references: [categoryid], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([bookid, categoryid])
+}
