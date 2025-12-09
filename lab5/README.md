@@ -36,7 +36,7 @@ ALTER TABLE Customers DROP COLUMN Address;
 
 * OrderID -> CustomerID, OrderDate, TotalAmount, StatusID
 
-5. OrderStatuses (3НФ)
+5. OrderStatuses(3НФ)
 
 * StatusID -> StatusName
 
