@@ -15,8 +15,8 @@ ALTER TABLE Orders
 ALTER TABLE Orders DROP COLUMN Status;
 ```
 ## Alter Table для Customers
--- Видалення старого стовпця
 ```
+-- Видалення старого стовпця
 ALTER TABLE Customers DROP COLUMN Address;
 ```
 ## Функціональні залежності
