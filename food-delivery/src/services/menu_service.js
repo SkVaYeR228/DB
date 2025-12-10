@@ -9,12 +9,20 @@ async function deleteMenuItem(itemId) {
 }
 
 async function getActiveMenu(restaurantId) {
-    return await prisma.menuItem.findMany({
-        where: {
-            restaurantId: restaurantId,
-            deletedAt: null
-        }
-    });
+  return await prisma.menuItem.findMany({
+    where: {
+      restaurantId: restaurantId,
+      deletedAt: null
+    }
+  });
 }
 
-module.exports = { deleteMenuItem, getActiveMenu };
+async function getFirstRestaurantId() {
+  const restaurant = await prisma.restaurant.findFirst({
+    select: { id: true },
+    orderBy: { id: 'asc' }
+  });
+  return restaurant ? restaurant.id : null;
+}
+
+module.exports = { deleteMenuItem, getActiveMenu, getFirstRestaurantId };

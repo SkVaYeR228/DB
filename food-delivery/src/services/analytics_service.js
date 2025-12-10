@@ -24,5 +24,35 @@ async function getTopRestaurants() {
 
   return serializedResult;
 }
+async function getUserRankings() {
+  
+  const result = await prisma.$queryRaw`
+    WITH UserSpend AS (
+      SELECT 
+        u.id,
+        u.name,
+        COUNT(o.id) as orders_count,
+        SUM(o."totalAmount") as total_spent
+      FROM "User" u
+      JOIN "Order" o ON u.id = o."userId"
+      GROUP BY u.id, u.name
+    )
+    SELECT 
+      DENSE_RANK() OVER (ORDER BY total_spent DESC) as rank,
+      name,
+      orders_count,
+      total_spent
+    FROM UserSpend
+    ORDER BY rank ASC
+    LIMIT 10;
+  `;
 
-module.exports = { getTopRestaurants };
+  return result.map(row => ({
+    rank: Number(row.rank),
+    name: row.name,
+    orders_count: row.orders_count.toString(),
+    total_spent: row.total_spent
+  }));
+}
+
+module.exports = { getTopRestaurants, getUserRankings };
